@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur mon blog{% endblock %}
+
+{% block body %}
+ {% for publication in publications %}
+    <h4>{{publication.title}}</h4>
+    <p>
+    <a href="{{ path('publication',{id: publication.id}) }}">plus de details</a>
+    </p>
+{% endfor %}
+{% if previous >= 0 %}
+        <a href="{{ path('app_blog', {offset:previous}) }}">Previous</a>
+    {% endif %}
+    {% if next < publications | length %}
+        <a href="{{ path('app_blog', {offset:next }) }}">Next</a>
+    {% endif %}
+{% endblock %}

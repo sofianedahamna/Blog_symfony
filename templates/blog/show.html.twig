@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{publication}} {% endblock %}
+{% block body %}
+    <h2> {{publication}} </h2>
+    <p> {{publication.content}} </p>
+    {% if comments | length > 0 %}
+    {% for comment in comments %}
+        <small>
+        {{comment.publishedAt | format_datetime('medium','short')}}
+        </small>
+        <p> {{comment.content}} </p>
+    {% endfor %}
+    {% if previous >= 0 %}
+        <a href="{{ path('publication', {id:publication.id,offset:previous}) }}">Previous</a>
+    {% endif %}
+    {% if next < comments | length %}
+        <a href="{{ path('publication', {id:publication.id,offset:next }) }}">Next</a>
+    {% endif %}
+    {% else %}
+        <div>il n'y a pas de commentaire pour cette publication</div>
+    {% endif %}
+    <h2>ajouter un commentaire</h2>
+    {{ form(comment_form) }}
+{% endblock %}
